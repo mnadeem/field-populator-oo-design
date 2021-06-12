@@ -14,7 +14,19 @@ import com.github.mnadee.populator.provider.ValueProvider;
 public class RowTemplateTest {
 	
 	@Test
-	public void test() {
+	public void basicTest() {		
+		RowTemplate rowTemplate = new RowTemplate(providers());
+		RowInstance rowInstance = rowTemplate.set("x", "R:58")
+		        .set("y", "H:R")
+		        .set("z", "L:Value:\"k1\",\"k2\"")
+		        .set("a", "F:Min non zero:1007,1024")
+		        .build();
+		
+		System.out.println(rowInstance);
+	}
+	
+	@Test
+	public void columnReferenceTest() {
 		
 		RowTemplate rowTemplate = new RowTemplate(providers());
 		RowInstance rowInstance = rowTemplate.set("x", "L:Value:[y],\"xk1\"")
