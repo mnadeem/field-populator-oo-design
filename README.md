@@ -50,7 +50,7 @@ public static void main(String[] args) {
 				.field("y", "L:Value:[z],\"yk1\"")
 				.field("z", "R:1")
 				.field("a", "F:Min non zero:1007,1024")
-				.build();
+				.buildInstance();
 		
 		System.out.println(rowInstance);
 	}
@@ -66,7 +66,7 @@ RowInstance rowInstance = rowTemplate.field("x", "R:58")
 		.field("y", "H:R")
 		.field("z", "L:Value:\"k1\",\"k2\"")
 		.field("a", "F:Min non zero:1007,1024")
-		.build();
+		.buildInstance();
 ```
 
 ```java
@@ -74,5 +74,5 @@ RowInstance rowInstance = rowTemplate.field("x", "L:Value:\"k1\",[y]")
 	   .field("y", "L:Value:\"k1\",[z]")
 		.field("z", "H:R")
 		.field("a", "F:Min non zero:1007,1024")
-		.build();
+		.buildInstance();
 ```
