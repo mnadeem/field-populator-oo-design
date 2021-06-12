@@ -1,14 +1,9 @@
 package com.github.mnadee.populator;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.github.mnadee.populator.provider.FunctionValueProvider;
-import com.github.mnadee.populator.provider.HardCodedValueProvider;
-import com.github.mnadee.populator.provider.LookupValueProvider;
-import com.github.mnadee.populator.provider.RuleValueProvider;
 import com.github.mnadee.populator.provider.ValueProvider;
 
 public class RowTemplate {
@@ -132,20 +127,5 @@ public class RowTemplate {
 			}
 		}
 		throw new IllegalStateException("Rule Provider not found");
-	}
-
-	public static void main(String[] args) {
-		RowTemplate rowTemplate = new RowTemplate(providers());
-		RowInstance rowInstance = rowTemplate.set("x", "L:Value:[y],\"xk1\"")
-				.set("y", "L:Value:[z],\"yk1\"")
-				.set("z", "R:1")
-				.set("a", "F:Min non zero:1007,1024")
-				.build();
-		
-		System.out.println(rowInstance);
-	}
-
-	private static List<ValueProvider> providers() {
-		return Arrays.asList(new HardCodedValueProvider(), new FunctionValueProvider(), new LookupValueProvider(), new RuleValueProvider());
 	}
 }
