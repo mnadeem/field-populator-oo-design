@@ -2,7 +2,7 @@
 
 
 ```
-R:58,2,10 
+R:58
 H:"R"
 L:Value:"k1","k2"
 
@@ -15,7 +15,7 @@ F:Increment:1015
 
 
 ```java
-		RowInstance rowInstance = rowTemplate.set("x", "R:58,2,10")
+		RowInstance rowInstance = rowTemplate.set("x", "R:58")
 				.set("y", "H:R")
 				.set("z", "L:Value:\"k1\",\"k2\"")
 				.set("a", "F:Min non zero:1007,1024")
