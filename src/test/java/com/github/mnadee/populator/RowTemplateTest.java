@@ -1,6 +1,7 @@
 package com.github.mnadee.populator;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
@@ -12,6 +13,12 @@ import com.github.mnadee.populator.provider.RuleValueProvider;
 import com.github.mnadee.populator.provider.ValueProvider;
 
 public class RowTemplateTest {
+	
+	
+	@Test(expected = IllegalStateException.class)
+	public void validationTest() {
+		new RowTemplate(Collections.emptyList());
+	}
 
 	@Test
 	public void basicTest() {		
