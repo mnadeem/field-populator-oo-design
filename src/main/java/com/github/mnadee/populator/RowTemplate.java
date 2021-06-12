@@ -5,7 +5,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.github.mnadee.populator.provider.FunctionValueProvider;
+import com.github.mnadee.populator.provider.HardCodedValueProvider;
+import com.github.mnadee.populator.provider.LookupValueProvider;
+import com.github.mnadee.populator.provider.RuleValueProvider;
+import com.github.mnadee.populator.provider.ValueProvider;
+
 public class RowTemplate {
+
+	private static final char COLUMN_END_INDICATOR_QUOTES = '"';
+	private static final char COLUMN_START_INDICATOR_QUOTES = '"';
+	private static final char COLUMN_END_INDICATOR_COLON = ']';
+	private static final char COLUMN_START_INDICATOR_COLON = '[';
+
+	private static final String SEPERATOR_COMMA = ",";
+	private static final String SEPERATOR_COLON = ":";
 
 	private final List<ValueProvider> providers;
 	private final Map<String, String> template;
@@ -45,7 +59,7 @@ public class RowTemplate {
 	}
 
 	private String getFieldValue(RowInstance rowInstance, String field, String fieldValue) {
-		String[] values = fieldValue.split(":");
+		String[] values = fieldValue.split(SEPERATOR_COLON);
 		int count = values.length;
 
 		String indicator = values[0];
@@ -62,7 +76,7 @@ public class RowTemplate {
 	}
 
 	private String[] params(String params) {
-		return params.split(",");
+		return params.split(SEPERATOR_COMMA);
 	}
 
 	private String updateRowInstance(RowInstance rowInstance, String field, String indicator, String type, String[] params) {
@@ -92,12 +106,12 @@ public class RowTemplate {
 			String param = params[i];
 			String paramVal = null;
 			if (param.startsWith("[")) {				
-				String fieldName = extractValueBetween(param, '[', ']');
+				String fieldName = extractValueBetween(param, COLUMN_START_INDICATOR_COLON, COLUMN_END_INDICATOR_COLON);
 				if (rowInstance.get(fieldName) == null) {				
 					paramVal = updateAndGetFieldValue(rowInstance, fieldName, template.get(fieldName));
 				}
 			} else if(param.startsWith("\"")) {
-				paramVal = extractValueBetween(param, '"', '"');
+				paramVal = extractValueBetween(param, COLUMN_START_INDICATOR_QUOTES, COLUMN_END_INDICATOR_QUOTES);
 			} else {
 				paramVal = getRuleProvider().provide(null, new String[]{param});
 			}
@@ -113,7 +127,7 @@ public class RowTemplate {
 
 	private ValueProvider getRuleProvider() {
 		for (ValueProvider valueProvider : providers) {
-			if (valueProvider.canProvide("R")) {
+			if (valueProvider.canProvide(Constants.RULE_INDICATOR)) {
 				return valueProvider;
 			}
 		}

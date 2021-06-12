@@ -1,4 +1,4 @@
-package com.github.mnadee.populator;
+package com.github.mnadee.populator.provider;
 
 public interface ValueProvider {
 
