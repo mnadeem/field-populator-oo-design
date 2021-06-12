@@ -12,7 +12,7 @@ import com.github.mnadee.populator.provider.RuleValueProvider;
 import com.github.mnadee.populator.provider.ValueProvider;
 
 public class RowTemplateTest {
-	
+
 	@Test
 	public void basicTest() {		
 		RowTemplate rowTemplate = new RowTemplate(providers());
@@ -24,7 +24,7 @@ public class RowTemplateTest {
 		
 		System.out.println(rowInstance);
 	}
-	
+
 	@Test
 	public void columnReferenceTest() {
 		

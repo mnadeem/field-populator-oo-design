@@ -21,9 +21,14 @@ public class RowTemplate {
 
 	private RowInstance built = null;
 
-	public RowTemplate(List<ValueProvider> providers) {
+	public RowTemplate(List<ValueProvider> providers) {		
 		this.providers = providers;
 		this.template = new HashMap<>();
+		validate();
+	}
+
+	private void validate() {
+		getRIndicatorProvider();		
 	}
 
 	public RowTemplate set(String field, String value) {
@@ -108,7 +113,7 @@ public class RowTemplate {
 			} else if(param.startsWith("\"")) {
 				paramVal = extractValueBetween(param, COLUMN_START_INDICATOR_QUOTES, COLUMN_END_INDICATOR_QUOTES);
 			} else {
-				paramVal = getRuleProvider().provide(null, new String[]{param});
+				paramVal = getRIndicatorProvider().provide(null, new String[]{param});
 			}
 			evaluatedParams[i] = paramVal;
 		}
@@ -120,12 +125,12 @@ public class RowTemplate {
 		return val.substring(val.indexOf(start) + 1, val.lastIndexOf(end));
 	}
 
-	private ValueProvider getRuleProvider() {
+	private ValueProvider getRIndicatorProvider() {
 		for (ValueProvider valueProvider : providers) {
 			if (valueProvider.canProvide(Constants.RULE_INDICATOR)) {
 				return valueProvider;
 			}
 		}
-		throw new IllegalStateException("Rule Provider not found");
+		throw new IllegalStateException("Provider With Indicator '" + Constants.RULE_INDICATOR + "' is required.");
 	}
 }
