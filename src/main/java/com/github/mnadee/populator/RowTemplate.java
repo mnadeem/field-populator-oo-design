@@ -91,13 +91,13 @@ public class RowTemplate {
 		for (int i = 0; i < params.length; i++) {
 			String param = params[i];
 			String paramVal = null;
-			if (param.startsWith("[")) {
-				String fieldName = param.substring(param.indexOf("[") + 1, param.indexOf("]"));
+			if (param.startsWith("[")) {				
+				String fieldName = extractValueBetween(param, '[', ']');
 				if (rowInstance.get(fieldName) == null) {				
 					paramVal = updateAndGetFieldValue(rowInstance, fieldName, template.get(fieldName));
 				}
 			} else if(param.startsWith("\"")) {
-				paramVal = param;
+				paramVal = extractValueBetween(param, '"', '"');
 			} else {
 				paramVal = getRuleProvider().provide(null, new String[]{param});
 			}
@@ -105,6 +105,10 @@ public class RowTemplate {
 		}
 
 		return evaluatedParams;
+	}
+
+	private String extractValueBetween(String val, char start, char end) {
+		return val.substring(val.indexOf(start) + 1, val.lastIndexOf(end));
 	}
 
 	private ValueProvider getRuleProvider() {
@@ -123,6 +127,7 @@ public class RowTemplate {
 				.set("z", "R:1")
 				.set("a", "F:Min non zero:1007,1024")
 				.build();
+		
 		System.out.println(rowInstance);
 	}
 
