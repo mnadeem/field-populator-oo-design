@@ -14,11 +14,32 @@ import com.github.mnadee.populator.provider.ValueProvider;
 
 public class RowTemplateTest {
 	
-	
 	@Test(expected = IllegalStateException.class)
 	public void validationTest() {
 
 		new RowTemplate(Collections.emptyList());
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void cyclic1() {
+
+		RowTemplate rowTemplate = new RowTemplate(providers());
+		rowTemplate.set("x", "L:Value:[y],\"xk1\"")
+				.set("y", "L:Value:[z],\"yk1\"")
+				.set("z", "R:[x]")
+				.set("a", "F:Min non zero:1007,1024")
+				.buildInstance();
+	}
+	
+	@Test(expected = IllegalStateException.class)
+	public void cyclic2() {
+
+		RowTemplate rowTemplate = new RowTemplate(providers());
+		rowTemplate.set("x", "L:Value:[y],\"xk1\"")
+				.set("y", "L:Value:[z],\"yk1\"")
+				.set("z", "R:[a]")
+				.set("a", "F:Min non zero:[x],1024")
+				.buildInstance();
 	}
 
 	@Test
@@ -41,7 +62,7 @@ public class RowTemplateTest {
 		RowInstance rowInstance = rowTemplate.set("x", "L:Value:[y],\"xk1\"")
 				.set("y", "L:Value:[z],\"yk1\"")
 				.set("z", "R:1")
-				.set("a", "F:Min non zero:1007,1024")
+				.set("a", "F:Min non zero:[x],1024")
 				.buildInstance();
 		
 		System.out.println(rowInstance);

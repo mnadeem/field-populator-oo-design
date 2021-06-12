@@ -1,5 +1,6 @@
 package com.github.mnadee.populator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,12 +19,14 @@ public class RowTemplate {
 
 	private final List<ValueProvider> providers;
 	private final Map<String, String> template;
+	private final List<String> visited;
 
 	private RowInstance built = null;
 
 	public RowTemplate(List<ValueProvider> providers) {		
 		this.providers = providers;
 		this.template = new HashMap<>();
+		this.visited = new ArrayList<>();
 		validate();
 	}
 
@@ -46,13 +49,20 @@ public class RowTemplate {
 
 	private RowInstance doBuild() {
 		RowInstance rowInstance = new RowInstance();
+		
 		for (Map.Entry<String, String> entry : template.entrySet()) {
-			updateAndGetFieldValue(rowInstance, entry.getKey(), entry.getValue());
+			String filedName = entry.getKey();
+			updateAndGetFieldValue(rowInstance, filedName, entry.getValue());
+			visited.clear();
 		}
 		return rowInstance;
 	}
 
 	private String updateAndGetFieldValue(RowInstance rowInstance, String field, String fieldValue) {
+		if (visited.contains(field)) {
+			throw new IllegalStateException("Cyclic refrence for field : " + field);
+		}
+		visited.add(field);
 		String val = getFieldValue(rowInstance, field, fieldValue);
 		rowInstance.set(field, val);
 		return val;
