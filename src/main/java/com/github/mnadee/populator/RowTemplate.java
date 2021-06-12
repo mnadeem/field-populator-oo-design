@@ -37,7 +37,7 @@ public class RowTemplate {
 		return this;
 	}
 
-	public RowInstance build() {
+	public RowInstance buildInstance() {
 		if (built == null) {
 			built = doBuild();
 		}
@@ -72,14 +72,14 @@ public class RowTemplate {
 			type = values[1];
 			params = params(values[2]); 
 		}
-		return updateRowInstance(rowInstance, field, indicator, type, params);
+		return doGetFieldValue(rowInstance, field, indicator, type, params);
 	}
 
 	private String[] params(String params) {
 		return params.split(SEPERATOR_COMMA);
 	}
 
-	private String updateRowInstance(RowInstance rowInstance, String field, String indicator, String type, String[] params) {
+	private String doGetFieldValue(RowInstance rowInstance, String field, String indicator, String type, String[] params) {
 
 		String[] evaluatedParam = evaluateParams(rowInstance, params);
 

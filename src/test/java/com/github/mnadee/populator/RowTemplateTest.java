@@ -17,30 +17,32 @@ public class RowTemplateTest {
 	
 	@Test(expected = IllegalStateException.class)
 	public void validationTest() {
+
 		new RowTemplate(Collections.emptyList());
 	}
 
 	@Test
-	public void basicTest() {		
+	public void basicTest() {
+
 		RowTemplate rowTemplate = new RowTemplate(providers());
 		RowInstance rowInstance = rowTemplate.set("x", "R:58")
 		        .set("y", "H:R")
 		        .set("z", "L:Value:\"k1\",\"k2\"")
 		        .set("a", "F:Min non zero:1007,1024")
-		        .build();
+		        .buildInstance();
 		
 		System.out.println(rowInstance);
 	}
 
 	@Test
 	public void columnReferenceTest() {
-		
+
 		RowTemplate rowTemplate = new RowTemplate(providers());
 		RowInstance rowInstance = rowTemplate.set("x", "L:Value:[y],\"xk1\"")
 				.set("y", "L:Value:[z],\"yk1\"")
 				.set("z", "R:1")
 				.set("a", "F:Min non zero:1007,1024")
-				.build();
+				.buildInstance();
 		
 		System.out.println(rowInstance);
 	}
