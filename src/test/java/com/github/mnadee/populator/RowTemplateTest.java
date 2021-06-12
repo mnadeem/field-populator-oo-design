@@ -24,10 +24,10 @@ public class RowTemplateTest {
 	public void cyclic1() {
 
 		RowTemplate rowTemplate = new RowTemplate(providers());
-		rowTemplate.set("x", "L:Value:[y],\"xk1\"")
-				.set("y", "L:Value:[z],\"yk1\"")
-				.set("z", "R:[x]")
-				.set("a", "F:Min non zero:1007,1024")
+		rowTemplate.field("x", "L:Value:[y],\"xk1\"")
+				.field("y", "L:Value:[z],\"yk1\"")
+				.field("z", "R:[x]")
+				.field("a", "F:Min non zero:1007,1024")
 				.buildInstance();
 	}
 	
@@ -35,10 +35,10 @@ public class RowTemplateTest {
 	public void cyclic2() {
 
 		RowTemplate rowTemplate = new RowTemplate(providers());
-		rowTemplate.set("x", "L:Value:[y],\"xk1\"")
-				.set("y", "L:Value:[z],\"yk1\"")
-				.set("z", "R:[a]")
-				.set("a", "F:Min non zero:[x],1024")
+		rowTemplate.field("x", "L:Value:[y],\"xk1\"")
+				.field("y", "L:Value:[z],\"yk1\"")
+				.field("z", "R:[a]")
+				.field("a", "F:Min non zero:[x],1024")
 				.buildInstance();
 	}
 
@@ -46,10 +46,10 @@ public class RowTemplateTest {
 	public void basicTest() {
 
 		RowTemplate rowTemplate = new RowTemplate(providers());
-		RowInstance rowInstance = rowTemplate.set("x", "R:58")
-		        .set("y", "H:R")
-		        .set("z", "L:Value:\"k1\",\"k2\"")
-		        .set("a", "F:Min non zero:1007,1024")
+		RowInstance rowInstance = rowTemplate.field("x", "R:58")
+		        .field("y", "H:R")
+		        .field("z", "L:Value:\"k1\",\"k2\"")
+		        .field("a", "F:Min non zero:1007,1024")
 		        .buildInstance();
 		
 		System.out.println(rowInstance);
@@ -59,10 +59,10 @@ public class RowTemplateTest {
 	public void columnReferenceTest() {
 
 		RowTemplate rowTemplate = new RowTemplate(providers());
-		RowInstance rowInstance = rowTemplate.set("x", "L:Value:[y],\"xk1\"")
-				.set("y", "L:Value:[z],\"yk1\"")
-				.set("z", "R:1")
-				.set("a", "F:Min non zero:[x],1024")
+		RowInstance rowInstance = rowTemplate.field("x", "L:Value:[y],\"xk1\"")
+				.field("y", "L:Value:[z],\"yk1\"")
+				.field("z", "R:1")
+				.field("a", "F:Min non zero:[x],1024")
 				.buildInstance();
 		
 		System.out.println(rowInstance);

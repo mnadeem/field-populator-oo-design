@@ -46,10 +46,10 @@ Refer test cases for more details.
 ```java
 public static void main(String[] args) {
 		RowTemplate rowTemplate = new RowTemplate(providers());
-		RowInstance rowInstance = rowTemplate.set("x", "L:Value:[y],\"xk1\"")
-				.set("y", "L:Value:[z],\"yk1\"")
-				.set("z", "R:1")
-				.set("a", "F:Min non zero:1007,1024")
+		RowInstance rowInstance = rowTemplate.field("x", "L:Value:[y],\"xk1\"")
+				.field("y", "L:Value:[z],\"yk1\"")
+				.field("z", "R:1")
+				.field("a", "F:Min non zero:1007,1024")
 				.build();
 		
 		System.out.println(rowInstance);
@@ -62,17 +62,17 @@ public static void main(String[] args) {
 
 
 ```java
-RowInstance rowInstance = rowTemplate.set("x", "R:58")
-		.set("y", "H:R")
-		.set("z", "L:Value:\"k1\",\"k2\"")
-		.set("a", "F:Min non zero:1007,1024")
+RowInstance rowInstance = rowTemplate.field("x", "R:58")
+		.field("y", "H:R")
+		.field("z", "L:Value:\"k1\",\"k2\"")
+		.field("a", "F:Min non zero:1007,1024")
 		.build();
 ```
 
 ```java
-RowInstance rowInstance = rowTemplate.set("x", "L:Value:\"k1\",[y]")
-	   .set("y", "L:Value:\"k1\",[z]")
-		.set("z", "H:R")
-		.set("a", "F:Min non zero:1007,1024")
+RowInstance rowInstance = rowTemplate.field("x", "L:Value:\"k1\",[y]")
+	   .field("y", "L:Value:\"k1\",[z]")
+		.field("z", "H:R")
+		.field("a", "F:Min non zero:1007,1024")
 		.build();
 ```

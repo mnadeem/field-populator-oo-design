@@ -7,11 +7,11 @@ public class RowInstance {
 
 	private Map<String, String> value = new HashMap<>();
 
-	public void set(String field, String val) {
+	public void setField(String field, String val) {
 		value.put(field, val);
 	}
 
-	public String get(String field) {
+	public String getField(String field) {
 		return value.get(field);
 	}
 

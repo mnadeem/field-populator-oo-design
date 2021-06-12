@@ -34,7 +34,7 @@ public class RowTemplate {
 		getRIndicatorProvider();		
 	}
 
-	public RowTemplate set(String field, String value) {
+	public RowTemplate field(String field, String value) {
 		template.put(field, value);
 		built = null;
 		return this;
@@ -64,7 +64,7 @@ public class RowTemplate {
 		}
 		visited.add(field);
 		String val = getFieldValue(rowInstance, field, fieldValue);
-		rowInstance.set(field, val);
+		rowInstance.setField(field, val);
 		return val;
 	}
 
@@ -93,7 +93,7 @@ public class RowTemplate {
 
 		String[] evaluatedParam = evaluateParams(rowInstance, params);
 
-		String value = rowInstance.get(field);
+		String value = rowInstance.getField(field);
 		if (value == null) {
 			for (ValueProvider provider : this.providers) {
 				if (provider.canProvide(indicator)) {				
@@ -117,7 +117,7 @@ public class RowTemplate {
 			String paramVal = null;
 			if (param.startsWith(String.valueOf(COLUMN_START_INDICATOR_COLON))) {				
 				String fieldName = extractValueBetween(param, COLUMN_START_INDICATOR_COLON, COLUMN_END_INDICATOR_COLON);
-				if (rowInstance.get(fieldName) == null) {				
+				if (rowInstance.getField(fieldName) == null) {				
 					paramVal = updateAndGetFieldValue(rowInstance, fieldName, template.get(fieldName));
 				}
 			} else if(param.startsWith(String.valueOf(COLUMN_START_INDICATOR_QUOTES))) {
