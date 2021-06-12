@@ -9,8 +9,8 @@ import com.github.mnadee.populator.provider.ValueProvider;
 
 public class RowTemplate {
 
-	private static final char COLUMN_END_INDICATOR_QUOTES = '"';
 	private static final char COLUMN_START_INDICATOR_QUOTES = '"';
+	private static final char COLUMN_END_INDICATOR_QUOTES = COLUMN_START_INDICATOR_QUOTES;
 	private static final char COLUMN_END_INDICATOR_COLON = ']';
 	private static final char COLUMN_START_INDICATOR_COLON = '[';
 
@@ -115,12 +115,12 @@ public class RowTemplate {
 		for (int i = 0; i < params.length; i++) {
 			String param = params[i];
 			String paramVal = null;
-			if (param.startsWith("[")) {				
+			if (param.startsWith(String.valueOf(COLUMN_START_INDICATOR_COLON))) {				
 				String fieldName = extractValueBetween(param, COLUMN_START_INDICATOR_COLON, COLUMN_END_INDICATOR_COLON);
 				if (rowInstance.get(fieldName) == null) {				
 					paramVal = updateAndGetFieldValue(rowInstance, fieldName, template.get(fieldName));
 				}
-			} else if(param.startsWith("\"")) {
+			} else if(param.startsWith(String.valueOf(COLUMN_START_INDICATOR_QUOTES))) {
 				paramVal = extractValueBetween(param, COLUMN_START_INDICATOR_QUOTES, COLUMN_END_INDICATOR_QUOTES);
 			} else {
 				paramVal = getRIndicatorProvider().provide(null, new String[]{param});
